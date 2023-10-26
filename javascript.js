@@ -2,7 +2,7 @@
 // console.log() version
 // by Luis Vilchez
 
-function getComputerChoice() {  // FUNCTION getComputerchoice()
+function getComputerChoice() {  // FUNCTION getComputerchoice
     const choice = Math.floor(Math.random()*3); // R=0, P=1, S=2
     const computerChoice = (choice === 0) ? 'rock' :
                         (choice === 1) ? 'paper' :
@@ -12,7 +12,8 @@ function getComputerChoice() {  // FUNCTION getComputerchoice()
 }
 
 /* 
-    FUNCTION playRound():
+    pseudocode for playRound
+
     Rock beats Scissors
     Paper beats Rock
     Scissors beats Paper 
@@ -26,9 +27,9 @@ function getComputerChoice() {  // FUNCTION getComputerchoice()
         case paper/scissors: ...
     return outcome
 */
-function playRound(playerSelection, computerSelection) {
+
+function playRound(playerSelection, computerSelection) {    // FUNCTION playRound
     let outcome = '';
-    playerSelection = playerSelection.toLowerCase();
 
     switch (playerSelection) {  // check player choice
         case 'error':
@@ -61,26 +62,30 @@ function playRound(playerSelection, computerSelection) {
     else if (outcome === 'draw')
         console.log(`${playerSelection} and ${computerSelection}. Draw.\n`);
 
-    return outcome; // return outcome
+    return outcome; // return round's outcome
 }
 
 function getPlayerChoice() {    // FUNCTION getPlayerChoice() 
-    let playerChoice = prompt(`Rock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors'); 
-    
-    if (playerChoice === null)
-        return null; // if player cancels prompt, return null and end game
+    let playerChoice = prompt(`Rock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors');     // ask for choice
 
-    while( ! (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors')) { // loop until get choice
+    if (playerChoice === null) // if player cancels prompt, return null and end game
+        return null; 
+    
+    let choice = playerChoice.toLowerCase();
+    while( ! (choice === 'rock' || choice === 'paper' || choice === 'scissors')) { // if choice invalid, loop until valid
         playerChoice = prompt(`Invalid choice.\n\nRock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors');
         if (playerChoice === null)
             return null;
-        playerChoice = playerChoice.toLowerCase();
+        choice = playerChoice.toLowerCase();
     }
-    return playerChoice;    // return playerchoice
+
+    console.log ('> ' + playerChoice); // print out input as it was typed
+    return choice;                      // and then return player choice in lowercase
 }
 
 /*
-    FUNCTION game() loop:
+    pseudocode for game
+
     let player counter = 0
     let computer counter = 0 
     while game is running:
@@ -97,7 +102,8 @@ function getPlayerChoice() {    // FUNCTION getPlayerChoice()
         if player or computer counter more than 3
             end game
 */
-function game() {
+
+function game() {   // FUNCTION game
     let playerCounter = 0;
     let computerCounter = 0;
     let gameRunning = true;
