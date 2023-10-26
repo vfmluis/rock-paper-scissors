@@ -35,18 +35,18 @@ function playRound(playerSelection, computerSelection) {
             console.error('unexpected computerChoice!');
             break;
         case 'rock':
-            if (computerSelection === 'paper') outcome = 'win'; // compare to computer choice and store outcome
-            else if (computerSelection === 'scissors') outcome = 'lose';
+            if (computerSelection === 'scissors') outcome = 'win'; // compare to computer choice and store outcome
+            else if (computerSelection === 'paper') outcome = 'lose';
             else outcome = 'draw';
             break;
         case 'paper':
-            if (computerSelection === 'paper') outcome = 'win';
+            if (computerSelection === 'rock') outcome = 'win';
             else if (computerSelection === 'scissors') outcome = 'lose';
             else outcome = 'draw';
             break;
         case 'scissors':
             if (computerSelection === 'paper') outcome = 'win';
-            else if (computerSelection === 'scissors') outcome = 'lose';
+            else if (computerSelection === 'rock') outcome = 'lose';
             else outcome = 'draw';
             break;
         default:
@@ -65,11 +65,17 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function getPlayerChoice() {    // FUNCTION getPlayerChoice() 
-    let playerChoice = '';
-        while( ! (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors')) { // loop until get choice
-            playerChoice = prompt('Make your choice.', 'rock paper scissors');
-            playerChoice = playerChoice.toLowerCase();
-        }
+    let playerChoice = prompt(`Rock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors'); 
+    
+    if (playerChoice === null)
+        return null; // if player cancels prompt, return null and end game
+
+    while( ! (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors')) { // loop until get choice
+        playerChoice = prompt(`Invalid choice.\n\nRock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors');
+        if (playerChoice === null)
+            return null;
+        playerChoice = playerChoice.toLowerCase();
+    }
     return playerChoice;    // return playerchoice
 }
 
@@ -104,6 +110,11 @@ function game() {
         
         const playerSelection = getPlayerChoice();  // get player and computer choice
         const computerSelection = getComputerChoice();
+
+        if (playerSelection === null) { // if player cancels prompt, end game
+            console.log('Canceled - ending game.');
+            return 0;
+        }
 
         const outcome = playRound(playerSelection, computerSelection);  // play the round and get outcome
 
