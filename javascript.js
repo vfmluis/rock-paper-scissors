@@ -1,14 +1,14 @@
-function getComputerChoice() {
+function getComputerChoice() {  // FUNCTION getComputerchoice()
     const choice = Math.floor(Math.random()*3); // R=0, P=1, S=2
     const computerChoice = (choice === 0) ? 'rock' :
                         (choice === 1) ? 'paper' :
                         (choice === 2) ? 'scissors':
                         'error';
-    return computerChoice;
+    return computerChoice;  // return computer choice
 }
 
 /* 
-    playRound():
+    FUNCTION playRound():
     Rock beats Scissors
     Paper beats Rock
     Scissors beats Paper 
@@ -26,12 +26,12 @@ function playRound(playerSelection, computerSelection) {
     let outcome = '';
     playerSelection = playerSelection.toLowerCase();
 
-    switch (playerSelection) {
+    switch (playerSelection) {  // check player choice
         case 'error':
             console.error('unexpected computerChoice!');
             break;
         case 'rock':
-            if (computerSelection === 'paper') outcome = 'win';
+            if (computerSelection === 'paper') outcome = 'win'; // compare to computer choice and store outcome
             else if (computerSelection === 'scissors') outcome = 'lose';
             else outcome = 'draw';
             break;
@@ -50,17 +50,27 @@ function playRound(playerSelection, computerSelection) {
             break;
     }   
 
-    if (outcome === 'win')
-        console.log(`${playerSelection} beats ${computerSelection}. You win!`)
+    if (outcome === 'win')  // declare round outcome
+        console.log(`${playerSelection} beats ${computerSelection}. You win!\n`);
     else if (outcome === 'lose')
-        console.log(`${playerSelection} is beaten by ${computerSelection}. Computer wins.`)
+        console.log(`${playerSelection} is beaten by ${computerSelection}. Computer wins.\n`);
     else if (outcome === 'draw')
-        console.log(`${playerSelection} and ${computerSelection}. Draw.`)
+        console.log(`${playerSelection} and ${computerSelection}. Draw.\n`);
 
-    return outcome;
+    return outcome; // return outcome
+}
+
+function getPlayerChoice() {    // FUNCTION getPlayerChoice() 
+    let playerChoice = '';
+        while( ! (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors')) { // loop until get choice
+            playerChoice = prompt('Make your choice.', 'rock paper scissors');
+            playerChoice = playerChoice.toLowerCase();
+        }
+    return playerChoice;    // return playerchoice
 }
 
 /*
+    FUNCTION game() loop:
     let player counter = 0
     let computer counter = 0 
     while game is running:
@@ -68,8 +78,7 @@ function playRound(playerSelection, computerSelection) {
         Player: x
         Computer: y"
 
-        While lowercase not rock, paper or scissors
-            prompt: Make your choice.
+        get player choice
         get computer choice
         play round
 
@@ -88,15 +97,11 @@ function game() {
         console.log(`Player: ${playerCounter}`);
         console.log(`Computer: ${computerCounter}`);
         console.log(``);
-        let playerSelection = '';
-        while( ! (playerSelection === 'rock' || playerSelection === 'paper' || playerSelection === 'scissors')) { // get player choice
-            playerSelection = prompt('Make your choice.', 'rock paper scissors');
-            playerSelection = playerSelection.toLowerCase();
-        }
+        
+        const playerSelection = getPlayerChoice();  // get player and computer choice
+        const computerSelection = getComputerChoice();
 
-        const computerSelection = getComputerChoice();  // get computer choice
-
-        const outcome = playRound(playerSelection, computerSelection);  // get round outcome
+        const outcome = playRound(playerSelection, computerSelection);  // play the round and get outcome
 
         if (outcome === 'win')  // iterate win counters
             playerCounter += 1;
