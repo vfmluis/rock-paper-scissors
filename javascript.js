@@ -1,3 +1,7 @@
+// Rock Paper Scissors (Odin Project)
+// console.log() version
+// by Luis Vilchez
+
 function getComputerChoice() {  // FUNCTION getComputerchoice()
     const choice = Math.floor(Math.random()*3); // R=0, P=1, S=2
     const computerChoice = (choice === 0) ? 'rock' :
