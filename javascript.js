@@ -119,11 +119,11 @@ function game() {   // FUNCTION game
         console.log(``);
 
         if (playerCounter >= 3) {   // check for victory condition, finish game
-            console.log(`Player Victory!`)
+            console.log(`Player Victory!\n\n`)
             gameRunning = false;
             return 0;
         } else if (computerCounter >= 3) {
-            console.log(`Computer Victory!`)
+            console.log(`Computer Victory!\n\n`)
             gameRunning = false;
             return 0;
         }
@@ -132,7 +132,7 @@ function game() {   // FUNCTION game
         const computerSelection = getComputerChoice();
 
         if (playerSelection === null) { // if player cancels prompt, end game
-            console.log('Canceled - ending game.');
+            console.log(`Canceled - ending game.\n\n`);
             return 0;
         }
 
