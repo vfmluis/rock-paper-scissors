@@ -51,16 +51,20 @@ function playRound(playerSelection, computerSelection) {    // FUNCTION playRoun
             else outcome = 'draw';
             break;
         default:
-            console.error('unexpected playerSelection!')
+            console.error('unexpected playerSelection!');
             break;
     }   
 
-    if (outcome === 'win')  // declare round outcome
-        console.log(`${playerSelection} beats ${computerSelection}. You win!\n`);
-    else if (outcome === 'lose')
-        console.log(`${playerSelection} is beaten by ${computerSelection}. Computer wins.\n`);
-    else if (outcome === 'draw')
-        console.log(`${playerSelection} and ${computerSelection}. Draw.\n`);
+    if (outcome === 'win') {  // declare round outcome
+        console.log(`${playerSelection} beats ${computerSelection}`);
+        console.log(`You win!\n`);
+    } else if (outcome === 'lose') {
+        console.log(`${playerSelection} loses to ${computerSelection}`);
+        console.log(`Computer wins.\n`);
+    } else if (outcome === 'draw') {
+        console.log(`${playerSelection} and ${computerSelection}`);
+        console.log(`Draw.\n`);
+    }
 
     return outcome; // return round's outcome
 }
@@ -107,12 +111,22 @@ function game() {   // FUNCTION game
     let playerCounter = 0;
     let computerCounter = 0;
     let gameRunning = true;
+    console.log(`Rock Paper Scissors! Best of 5.`);
 
     while (gameRunning === true) {  // game loop
-        console.log(`Rock Paper Scissors! Best of 5.`);
         console.log(`Player: ${playerCounter}`);
         console.log(`Computer: ${computerCounter}`);
         console.log(``);
+
+        if (playerCounter >= 3) {   // check for victory condition, finish game
+            console.log(`Player Victory!`)
+            gameRunning = false;
+            return 0;
+        } else if (computerCounter >= 3) {
+            console.log(`Computer Victory!`)
+            gameRunning = false;
+            return 0;
+        }
         
         const playerSelection = getPlayerChoice();  // get player and computer choice
         const computerSelection = getComputerChoice();
@@ -128,13 +142,5 @@ function game() {   // FUNCTION game
             playerCounter += 1;
         else if (outcome === 'lose')
             computerCounter += 1;
-
-        if (playerCounter >= 3) {   // check for victory condition, finish game
-            console.log('Player Victory!')
-            gameRunning = false;
-        } else if (computerCounter >= 3) {
-            console.log('Computer Victory!')
-            gameRunning = false;
-        }
     }
 }
