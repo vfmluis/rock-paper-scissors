@@ -1,42 +1,45 @@
-// Rock Paper Scissors (Odin Project)
-// console.log() version
-// by Luis Vilchez
+/* Rock Paper Scissors (Odin Project)
+    console.log() version
+    by vfmluis */
 
-function getComputerChoice() {  // FUNCTION getComputerchoice
-    const choice = Math.floor(Math.random()*3); // R=0, P=1, S=2
-    const computerChoice = (choice === 0) ? 'rock' :
-                        (choice === 1) ? 'paper' :
-                        (choice === 2) ? 'scissors':
-                        'error';
-    return computerChoice;  // return computer choice
+function getPlayerChoice() {
+    let playerChoice = prompt(`Rock Paper Scissors! Best of 5.\nMake your choice.`,
+                                'rock paper scissors');
+
+    if (playerChoice === null) return null;
+
+    // Store choice separately for feedback VS for use in source logic.
+    let choice = playerChoice.toLowerCase();
+
+    // Notify if choice was invalid and get a valid input.
+    while(!(choice === 'rock' || choice === 'paper' || choice === 'scissors')) { 
+        playerChoice = prompt(`Invalid choice.\n\nRock Paper Scissors! Best of 5.\nMake your choice.`,
+                                'rock paper scissors');
+        if (playerChoice === null) return null;
+        choice = playerChoice.toLowerCase();
+    }
+    console.log ('> ' + playerChoice);
+    return choice;
 }
 
-/* 
-    pseudocode for playRound
+function getComputerChoice() {
+    const RANDOM = Math.floor(Math.random()*3);
+    const COMPUTER_CHOICE = (RANDOM === 0) ? 'rock' :
+                        (RANDOM === 1) ? 'paper' :
+                        (RANDOM === 2) ? 'scissors':
+                        'error';
+    return COMPUTER_CHOICE; 
+}
 
-    Rock beats Scissors
-    Paper beats Rock
-    Scissors beats Paper 
-
-    playerSelection is caps insensitive
-
-    switch playerSelection
-        case rock:
-            check computer choice
-                outcome = win/lose/tie
-        case paper/scissors: ...
-    return outcome
-*/
-
-function playRound(playerSelection, computerSelection) {    // FUNCTION playRound
+function playRound(playerSelection, computerSelection) {
+    // Compare selections to determine round outcome.
     let outcome = '';
-
-    switch (playerSelection) {  // check player choice
+    switch (playerSelection) {
         case 'error':
-            console.error('unexpected computerChoice!');
+            console.error('unexpected computerSelection!');
             break;
         case 'rock':
-            if (computerSelection === 'scissors') outcome = 'win'; // compare to computer choice and store outcome
+            if (computerSelection === 'scissors') outcome = 'win'; 
             else if (computerSelection === 'paper') outcome = 'lose';
             else outcome = 'draw';
             break;
@@ -55,7 +58,8 @@ function playRound(playerSelection, computerSelection) {    // FUNCTION playRoun
             break;
     }   
 
-    if (outcome === 'win') {  // declare round outcome
+    // Declare outcome of round.
+    if (outcome === 'win') { 
         console.log(`${playerSelection} beats ${computerSelection}`);
         console.log(`You win!\n`);
     } else if (outcome === 'lose') {
@@ -66,59 +70,21 @@ function playRound(playerSelection, computerSelection) {    // FUNCTION playRoun
         console.log(`Draw.\n`);
     }
 
-    return outcome; // return round's outcome
+    return outcome;
 }
 
-function getPlayerChoice() {    // FUNCTION getPlayerChoice() 
-    let playerChoice = prompt(`Rock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors');     // ask for choice
-
-    if (playerChoice === null) // if player cancels prompt, return null and end game
-        return null; 
-    
-    let choice = playerChoice.toLowerCase();
-    while( ! (choice === 'rock' || choice === 'paper' || choice === 'scissors')) { // if choice invalid, loop until valid
-        playerChoice = prompt(`Invalid choice.\n\nRock Paper Scissors! Best of 5.\nMake your choice.`, 'rock paper scissors');
-        if (playerChoice === null)
-            return null;
-        choice = playerChoice.toLowerCase();
-    }
-
-    console.log ('> ' + playerChoice); // print out input as it was typed
-    return choice;                      // and then return player choice in lowercase
-}
-
-/*
-    pseudocode for game
-
-    let player counter = 0
-    let computer counter = 0 
-    while game is running:
-        "Rock Paper Scissors! Best of 5.
-        Player: x
-        Computer: y"
-
-        get player choice
-        get computer choice
-        play round
-
-        if win, player counter++
-        if lose, computer counter++
-        if player or computer counter more than 3
-            end game
-*/
-
-function game() {   // FUNCTION game
+function game() {
     let playerCounter = 0;
     let computerCounter = 0;
     let gameRunning = true;
     console.log(`Rock Paper Scissors! Best of 5.`);
-
-    while (gameRunning === true) {  // game loop
+    // Game loop start.
+    while (gameRunning === true) {
         console.log(`Player: ${playerCounter}`);
         console.log(`Computer: ${computerCounter}`);
         console.log(``);
-
-        if (playerCounter >= 3) {   // check for victory condition, finish game
+    // End the game if victory condition has been met.
+        if (playerCounter >= 3) {
             console.log(`Player Victory!\n\n`)
             gameRunning = false;
             return 0;
@@ -128,19 +94,18 @@ function game() {   // FUNCTION game
             return 0;
         }
         
-        const playerSelection = getPlayerChoice();  // get player and computer choice
-        const computerSelection = getComputerChoice();
-
-        if (playerSelection === null) { // if player cancels prompt, end game
+        const PLAYER_CHOICE = getPlayerChoice();
+        const COMPUTER_CHOICE = getComputerChoice();
+    // If player clicks 'Cancel' when prompted, end the game.
+        if (PLAYER_CHOICE === null) {
             console.log(`Canceled - ending game.\n\n`);
             return 0;
         }
-
-        const outcome = playRound(playerSelection, computerSelection);  // play the round and get outcome
-
-        if (outcome === 'win')  // iterate win counters
+    // Tally round results.
+        const OUTCOME = playRound(PLAYER_CHOICE, COMPUTER_CHOICE);
+        if (OUTCOME === 'win')
             playerCounter += 1;
-        else if (outcome === 'lose')
+        else if (OUTCOME === 'lose')
             computerCounter += 1;
     }
 }
